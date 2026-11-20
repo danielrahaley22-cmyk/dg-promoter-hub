@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DG Promoter Hub</title>
+<link rel="icon" type="image/png" href="dg-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0b0b0c;--card:#151517;--card2:#1c1c1f;--line:#2b2b30;--text:#f2f2f3;--muted:#9c9ca6;--accent:#ff2e2e;--accent2:#ff7a7a;--good:#3fd08a;--gold:#f6c343;--soon:#6d6d78}
 *{box-sizing:border-box}
@@ -16,12 +17,24 @@ header{position:sticky;top:0;z-index:5;background:rgba(11,11,12,.92);backdrop-fi
 header .wrap{display:flex;align-items:center;gap:14px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
 .brand{font-weight:900;letter-spacing:.04em;font-size:17px;text-decoration:none;text-transform:uppercase}
 .brand span{color:var(--accent)}
+.brand{display:inline-flex;align-items:center;gap:8px}.brand img{height:22px;width:auto;display:block}
 nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
 nav a{text-decoration:none;padding:7px 12px;border-radius:99px;font-size:14px;color:var(--muted);font-weight:600}
 nav a.on{background:var(--accent);color:#fff}
 nav a:not(.on):hover{color:var(--text);background:var(--card2)}
 h1{font-size:34px;line-height:1.05;margin:30px 0 8px;letter-spacing:-.02em;font-weight:900;text-transform:uppercase}
 h1 em{font-style:normal;color:var(--accent)}
+.hero{position:relative;overflow:hidden;margin:22px 0 8px;padding:20px 22px 22px;border-radius:14px;border:1px solid var(--line);
+  background:repeating-linear-gradient(115deg,transparent 0 22px,rgba(255,46,46,.07) 22px 23px),#0b0b0c}
+.hero::after{content:"";position:absolute;top:0;bottom:0;right:-60px;width:150px;background:var(--accent);transform:skewX(-14deg);pointer-events:none}
+.hero>*{position:relative;z-index:1;max-width:calc(100% - 90px)}
+.hero-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.hero-top img{height:30px;width:auto;display:block}
+.hero .eyebrow{color:var(--accent);font:800 12px/1 Archivo,sans-serif;letter-spacing:.18em;text-transform:uppercase}
+.hero h1{margin:0 0 8px}
+.hero .sub{margin:0}
+.hero-rule{width:64px;height:6px;background:var(--accent);transform:skewX(-24deg);margin-top:14px}
+@media(max-width:560px){.hero::after{width:70px;right:-40px}.hero>*{max-width:calc(100% - 36px)}.hero-top img{height:24px}.hero .eyebrow{font-size:10px;letter-spacing:.14em}}
 h2{font:700 12px/1 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:34px 0 12px}
 .sub{color:var(--muted);margin:0 0 6px}
 .small{font-size:12.5px;color:var(--muted)}
@@ -100,12 +113,47 @@ footer{color:var(--muted);font-size:12px;margin-top:44px;border-top:1px solid va
   h1{font-size:26px}.hide-sm{display:none}th,td{padding:9px 8px}
   .bar{grid-template-columns:92px 1fr 50px}
 }
+
+/* ===== MORE DG: brand layer (matches the Promoter Agreement look) ===== */
+body{background:
+  url(dg-logo.png) no-repeat right -60px bottom -40px/520px auto fixed,
+  repeating-linear-gradient(115deg,transparent 0 34px,rgba(255,255,255,.018) 34px 35px) fixed,var(--bg)}
+body::before{content:"";position:fixed;inset:0;background:var(--bg);opacity:.93;z-index:-1}
+header{border-bottom:0;box-shadow:0 3px 0 var(--accent)}
+.brand{font-stretch:125%;font-size:18px}.brand img{height:26px}
+.ticker{background:var(--accent);color:#fff;overflow:hidden;white-space:nowrap;font:900 13px/1 Archivo,sans-serif;font-stretch:125%;text-transform:uppercase;letter-spacing:.06em;padding:8px 0;transform:skewY(-1deg);margin:10px 0 4px}
+.ticker-in{display:inline-block;animation:dgtick 28s linear infinite}.ticker span{padding-right:0}
+@keyframes dgtick{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.ticker-in{animation:none}}
+h1{font-stretch:125%;font-size:46px;line-height:.98;letter-spacing:0}
+.hero{padding:26px 26px 26px;border-radius:6px;border:0;border-left:6px solid var(--accent);
+  background:repeating-linear-gradient(115deg,transparent 0 22px,rgba(255,46,46,.10) 22px 23px),#111113}
+.hero::after{width:210px;right:-70px}
+.hero::before{content:"DG";position:absolute;right:120px;bottom:-34px;font:900 150px/1 Archivo,sans-serif;font-stretch:125%;color:transparent;-webkit-text-stroke:1.5px rgba(255,46,46,.35);z-index:0;pointer-events:none}
+.hero-top img{height:36px}
+.hero .eyebrow{font-size:13px}
+h2{font:900 22px/1 Archivo,sans-serif;font-stretch:125%;color:var(--text);letter-spacing:.01em;display:flex;align-items:center;gap:12px;margin:40px 0 14px}
+h2::before{content:"";flex:0 0 auto;width:26px;height:10px;background:var(--accent);transform:skewX(-24deg)}
+.card,.stat{border-radius:6px}
+.card{transition:border-color .15s,transform .15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+a.card::after{content:"";position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 18px 18px 0;border-color:transparent var(--accent) transparent transparent;border-top-right-radius:6px}
+.card b{font-stretch:112%}
+.stat{border-top:3px solid var(--accent)}
+.stat .v{font-stretch:125%;font-size:30px}
+.btn{border-radius:3px;text-transform:uppercase;font-stretch:115%;letter-spacing:.03em;font-weight:800;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);padding-left:18px;padding-right:18px}
+.btn.ghost{clip-path:none;border-radius:3px}
+.alert{border-radius:6px}
+footer{border-top:3px solid var(--accent);display:flex;gap:14px;align-items:flex-start}
+footer::before{content:"";flex:0 0 auto;width:48px;height:21px;background:url(dg-logo.png) no-repeat left center/contain;margin-top:1px}
+@media(max-width:560px){.hero .eyebrow{white-space:nowrap;font-size:9.5px;letter-spacing:.1em}.hero-top img{height:26px}h1{font-size:30px}h2{font-size:18px}.hero::before{font-size:100px;right:40px}.hero::after{width:90px;right:-50px}body{background-size:320px auto,auto,auto}}
 </style>
 </head>
 <body>
 <header><div class="wrap">
-  <a class="brand" href="#home">DG <span>Promoter Hub</span></a>
+  <a class="brand" href="#home"><img src="dg-logo.png" alt="DG"> <span>Promoter Hub</span></a>
 </div></header>
+<div class="ticker" aria-hidden="true"><div class="ticker-in"><span>Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ </span><span>Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ </span></div></div>
 <main class="wrap" id="app"></main>
 
 <script>
@@ -500,8 +548,20 @@ function route(){
   else if(h==='leaderboard'){ r='leaderboard'; lbAll=false; app.innerHTML=viewLeaderboard(); bindLeaderboard(); }
   else if(h.startsWith('team-') && teamById[h.slice(5)]){ r='teams'; ts={q:'',zero:true,period:'all',all:false}; app.innerHTML=viewTeam(h.slice(5)); bindTeam(h.slice(5)); }
   else { app.innerHTML=viewHome(); bindHome(); }
+  brandHero(app);
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on', a.dataset.r===r));
   window.scrollTo(0,0);
+}
+// DG-style banner (like the Promoter Agreement image) around each page's title
+function brandHero(app){
+  const h1 = app.querySelector('h1'); if(!h1) return;
+  const hero = document.createElement('div'); hero.className = 'hero';
+  hero.innerHTML = '<div class="hero-top"><img src="dg-logo.png" alt="DG"><span class="eyebrow">Dangerous Goods · XXL</span></div>';
+  h1.parentNode.insertBefore(hero, h1);
+  hero.appendChild(h1);
+  const sub = hero.nextElementSibling;
+  if(sub && sub.classList.contains('sub')) hero.appendChild(sub);
+  const bar = document.createElement('div'); bar.className = 'hero-rule'; hero.appendChild(bar);
 }
 document.addEventListener('click', async e=>{
   const m = e.target.closest('[data-me]');
