@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DG Promoter Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0c;--card:#151517;--card2:#1c1c1f;--line:#2b2b30;--text:#f2f2f3;--muted:#9c9ca6;--accent:#ff2e2e;--accent2:#ff7a7a;--good:#3fd08a;--gold:#f6c343;--soon:#6d6d78}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 Archivo,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}
+.wrap{max-width:1020px;margin:0 auto;padding:0 16px 64px}
+header{position:sticky;top:0;z-index:5;background:rgba(11,11,12,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:14px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.brand{font-weight:900;letter-spacing:.04em;font-size:17px;text-decoration:none;text-transform:uppercase}
+.brand span{color:var(--accent)}
+nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav a{text-decoration:none;padding:7px 12px;border-radius:99px;font-size:14px;color:var(--muted);font-weight:600}
+nav a.on{background:var(--accent);color:#fff}
+nav a:not(.on):hover{color:var(--text);background:var(--card2)}
+h1{font-size:34px;line-height:1.05;margin:30px 0 8px;letter-spacing:-.02em;font-weight:900;text-transform:uppercase}
+h1 em{font-style:normal;color:var(--accent)}
+h2{font:700 12px/1 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:34px 0 12px}
+.sub{color:var(--muted);margin:0 0 6px}
+.small{font-size:12.5px;color:var(--muted)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(225px,1fr))}
+.grid3{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-decoration:none;display:block;position:relative}
+a.card:hover{border-color:var(--accent)}
+.card .ico{font-size:22px;margin-bottom:8px}
+.card b{display:block;font-size:16px;margin-bottom:2px}
+.card .big{font:900 34px/1 Archivo,sans-serif;letter-spacing:-.02em;margin:12px 0 2px;font-variant-numeric:tabular-nums}
+.card .row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:6px}
+.card.soon{opacity:.6;border-style:dashed;cursor:default}
+.card.hot{border-color:var(--accent);background:linear-gradient(135deg,rgba(255,46,46,.16),var(--card) 60%)}
+.pill{display:inline-block;font:700 10.5px/1 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border-radius:99px;border:1px solid currentColor;white-space:nowrap}
+.pill.soon{color:var(--soon)}.pill.hot{color:var(--accent2)}.pill.good{color:var(--good)}.pill.gold{color:var(--gold)}
+.card>.pill.corner{position:absolute;top:14px;right:14px}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:9px 14px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.ghost{background:var(--card2);color:var(--text);border:1px solid var(--line)}
+.btn.sm{padding:5px 10px;font-size:13px;border-radius:8px;white-space:nowrap}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+input[type=search]{width:100%;background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:12px 14px;font:inherit}
+input[type=search]:focus{outline:2px solid var(--accent);border-color:transparent}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+.seg button{background:none;border:0;color:var(--muted);font:inherit;font-size:13.5px;padding:6px 12px;border-radius:7px;cursor:pointer}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}
+.tools .grow{flex:1;min-width:200px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{padding:10px 12px;text-align:left;border-top:1px solid var(--line);font-size:14px;vertical-align:middle}
+th{border-top:0;font:700 11px/1.2 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:var(--card2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+td.rk{width:44px;color:var(--muted);font-variant-numeric:tabular-nums}
+tr.top1 td.rk{color:var(--gold);font-weight:900}tr.top2 td.rk,tr.top3 td.rk{color:var(--accent2);font-weight:900}
+tr.me td{background:rgba(255,46,46,.10)}
+.code{font:700 13.5px/1.2 "IBM Plex Mono",monospace;letter-spacing:.01em}
+.nm{display:block;color:var(--muted);font-size:12.5px}
+.tag{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin-right:4px;white-space:nowrap;text-decoration:none;display:inline-block}
+a.tag:hover{color:var(--text);border-color:var(--accent)}
+.bars{display:grid;gap:9px}
+.bar{display:grid;grid-template-columns:120px 1fr 64px;gap:10px;align-items:center;font-size:14px}
+.bar .track{height:14px;background:var(--card2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar .fill{height:100%;background:var(--accent);border-radius:99px}
+.bar.lead .fill{background:var(--gold)}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.bar a{text-decoration:none}.bar a:hover{color:var(--accent2)}
+.stats{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));margin-top:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat .k{font-size:12px;color:var(--muted)}
+.stat .v{font:900 26px/1.1 Archivo,sans-serif;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.alert{background:rgba(255,46,46,.12);border:2px solid var(--accent);border-radius:14px;padding:18px;margin:18px 0 0}
+.alert .tag-urgent{display:inline-block;background:var(--accent);color:#fff;font:700 11px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:99px;margin-bottom:10px}
+.alert b.head{display:block;font-size:19px;line-height:1.25;margin-bottom:8px}
+.alert ul{margin:8px 0 14px;padding-left:20px}.alert li{margin:4px 0}
+.alert .alert-img{float:right;width:120px;margin:0 0 8px 12px;border-radius:6px;overflow:hidden}.alert .alert-img img{display:block;width:100%;height:auto}.alert .done-note{clear:both}
+.alert .done-note{margin-top:12px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.06);font-size:14px}
+.me-card{background:linear-gradient(135deg,rgba(255,46,46,.2),var(--card) 55%);border:1px solid var(--accent);border-radius:16px;padding:18px;margin-top:12px}
+.me-card .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.me-card .code{font-size:22px}
+.me-nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:14px 0}
+.me-nums div{background:rgba(0,0,0,.28);border-radius:10px;padding:10px 12px}
+.me-nums .v{font:900 24px/1.1 Archivo,sans-serif;font-variant-numeric:tabular-nums}
+.prog{height:12px;border-radius:99px;background:rgba(0,0,0,.35);overflow:hidden;border:1px solid var(--line)}
+.prog i{display:block;height:100%;background:var(--gold);border-radius:99px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
+.chip .code{font-size:12.5px}
+.rules ul{margin:8px 0 0;padding-left:20px}.rules li{margin:6px 0}.rules li b{display:inline;font-size:inherit;margin:0}.rules .card{margin-bottom:12px}.rules .two{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.rules .two .card{margin:0}
+.empty{color:var(--muted);padding:18px;text-align:center}
+.back{display:inline-block;margin-top:22px;color:var(--muted);text-decoration:none;font-size:14px}
+.back:hover{color:var(--accent2)}
+.note{background:var(--card2);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;color:var(--muted);font-size:13.5px;margin-top:12px}
+.copied{color:var(--good)!important}
+footer{color:var(--muted);font-size:12px;margin-top:44px;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:640px){
+  h1{font-size:26px}.hide-sm{display:none}th,td{padding:9px 8px}
+  .bar{grid-template-columns:92px 1fr 50px}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="brand" href="#home">DG <span>Promoter Hub</span></a>
+</div></header>
+<main class="wrap" id="app"></main>
+
+<script>
+window.DG_META={"updated":"","source":"2027 Team Sheets"};
+window.DG=[{"c":"ALBYDG","n":"Albert Wong","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=ALBYDG"},{"c":"AVA10DG","n":"Ava Leggett","t":["multi"],"tot":0,"w":0,"s":{},"ls":"","h":"Melbourne","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-melbourne-JAN2027?discount=AVA10DG"},{"c":"BARBARADG","n":"Barbara Satie Rodrigues Arikawa","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=BARBARADG"},{"c":"CAITRDG","n":"Caitlyn Roshkov","t":["per"],"tot":0,"w":0,"s":{},"ls":"","h":"Perth","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-perth-JAN2027?discount=CAITRDG"},{"c":"CHARLYBDG","n":"Charly Bennett","t":["bris"],"tot":0,"w":0,"s":{},"ls":"","h":"Brisbane","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-brisbane-JAN2027?discount=CHARLYBDG"},{"c":"CHRISTYLEUNGDG","n":"Christy Leung","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=CHRISTYLEUNGDG"},{"c":"DEVENDG","n":"Deven Denley","t":["mel"],"tot":0,"w":0,"s":{},"ls":"","h":"Melbourne","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-melbourne-JAN2027?discount=DEVENDG"},{"c":"DUNEEDG","n":"Duneesha Ovitigala","t":["mel"],"tot":0,"w":0,"s":{},"ls":"","h":"Melbourne","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-melbourne-JAN2027?discount=DUNEEDG"},{"c":"EMILDG","n":"Emil Gallo","t":["per"],"tot":0,"w":0,"s":{},"ls":"","h":"Perth","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-perth-JAN2027?discount=EMILDG"},{"c":"EMILYDG","n":"Emily Theoctistou","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=EMILYDG"},{"c":"FLETCHDG","n":"Bailey Thomas Taylor Fletcher Colvin","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=FLETCHDG"},{"c":"ISAACDG","n":"Isaac Yung","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=ISAACDG"},{"c":"JAMEYDG","n":"Jamey Ryan","t":["mel"],"tot":0,"w":0,"s":{},"ls":"","h":"Melbourne","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-melbourne-JAN2027?discount=JAMEYDG"},{"c":"KENZDG","n":"Makenzee Hicks","t":["bris"],"tot":0,"w":0,"s":{},"ls":"","h":"Brisbane","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-brisbane-JAN2027?discount=KENZDG"},{"c":"LACHIMDG","n":"Lachlan Moir","t":["per"],"tot":0,"w":0,"s":{},"ls":"","h":"Perth","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-perth-JAN2027?discount=LACHIMDG"},{"c":"LENADG","n":"Lena Lebailly","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=LENADG"},{"c":"LILADG","n":"Lila Montgomery","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=LILADG"},{"c":"LILY5DG","n":"Lily Cooper","t":["mel"],"tot":0,"w":0,"s":{},"ls":"","h":"Melbourne","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-melbourne-JAN2027?discount=LILY5DG"},{"c":"MINIDG","n":"Jacqueline McKenzie","t":["bris"],"tot":0,"w":0,"s":{},"ls":"","h":"Brisbane","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-brisbane-JAN2027?discount=MINIDG"},{"c":"NIIXDG","n":"Nicole Hadfield","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=NIIXDG"},{"c":"OLDDUCKRAVERSDG","n":"Jaimi Houison","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=OLDDUCKRAVERSDG"},{"c":"RAVEBABYSDG","n":"Courtney Stone","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=RAVEBABYSDG"},{"c":"SHIVAMDG","n":"Shivam Khanna","t":["mel"],"tot":0,"w":0,"s":{},"ls":"","h":"Melbourne","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-melbourne-JAN2027?discount=SHIVAMDG"},{"c":"SIENNAFGDG","n":"Sienna Fleming","t":["mel"],"tot":0,"w":0,"s":{},"ls":"","h":"Melbourne","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-melbourne-JAN2027?discount=SIENNAFGDG"},{"c":"T4TIDG","n":"Tatianna Sigua","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=T4TIDG"},{"c":"TAMIDG","n":"Tamihana Pomare","t":["per"],"tot":0,"w":0,"s":{},"ls":"","h":"Perth","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-perth-JAN2027?discount=TAMIDG"},{"c":"TOMSDG","n":"Tom Smith","t":["bris"],"tot":0,"w":0,"s":{},"ls":"","h":"Brisbane","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-brisbane-JAN2027?discount=TOMSDG"},{"c":"TWISTEDDG","n":"Casey Marshall","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=TWISTEDDG"},{"c":"WILLY8DG","n":"Wilson Tang","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=WILLY8DG"},{"c":"XENODG","n":"Jade Smith","t":["syd"],"tot":0,"w":0,"s":{},"ls":"","h":"Sydney","host":false,"l":"https://megatix.com.au/events/dangerous-goods-xxl-festival-sydney-JAN2027?discount=XENODG"}];
+
+</script>
+<script>
+(function(){
+const DATA = window.DG, META = window.DG_META;
+
+// ================= EDIT THESE =================
+const LINKS = {
+  playbook: "https://drive.google.com/file/d/1GXI5hHxqS4kG1t658rhkHE397_Z8U0w4/view",
+  contentPack: "https://drive.google.com/drive/folders/1vCKtep8X46rY1BpoY08ENHSgVwhzkQ-a",
+  continuation: "https://danielrahaley22-cmyk.github.io/dg-promoter-agreement/",   // DG Promoter Agreement (GitHub)
+  rules: "",          // Promoter Rules / T&Cs link
+};
+// Active incentives. team: 'all' or a team id (bris, adl, per, mel1, mel2, mel3, syd, new).
+// Example: {team:'all', title:'Friday push', prize:'DG merch pack', how:'3+ sales Mon to Fri', ends:'Fri 20 Nov'}
+// Loaded 20 Nov from Lauren's promoter dashboards (same in every state, updated Thu 19 Nov 9:43am).
+const INCENTIVES = [];
+// State offers shown on the Offers page. Example: {state:'Melbourne', title:'...', detail:'...'}
+const OFFERS = [];
+const FREE_EVERY = 5;   // 5 sales = 1 free ticket
+// ==============================================
+
+const TEAMS = [
+  {id:'mel',  name:'Melbourne', lead:'', state:'Melbourne'},
+  {id:'syd',  name:'Sydney',    lead:'', state:'Sydney'},
+  {id:'bris', name:'Brisbane',  lead:'', state:'Brisbane'},
+  {id:'per',  name:'Perth',     lead:'', state:'Perth'},
+  {id:'adl',  name:'Adelaide',  lead:'', state:'Adelaide'},
+  {id:'multi',name:'Multi-State', lead:'', state:null, sub:'Promoting more than one state'},
+];
+const STATES = ['Melbourne','Sydney','Brisbane','Perth','Adelaide'];
+const teamById = Object.fromEntries(TEAMS.map(t=>[t.id,t]));
+const byCode = Object.fromEntries(DATA.map(p=>[p.c,p]));
+
+const fmt = n => n.toLocaleString('en-AU');
+const esc = s => String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const val = (p, per) => per==='week' ? p.w : p.tot;
+const members = id => DATA.filter(p=>p.t.includes(id));
+const day = s => { if(!s) return '—'; return new Date(s+'T00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short'}); };
+const rankable = p => !p.host;
+const freeTix = p => Math.floor(p.tot/FREE_EVERY);
+const toNext = p => FREE_EVERY - (p.tot % FREE_EVERY);
+
+const ranked = DATA.filter(rankable).filter(p=>p.tot>0).slice().sort((a,b)=>b.tot-a.tot);
+const RANK = {}; ranked.forEach((p,i)=>{ RANK[p.c] = (i>0 && ranked[i-1].tot===p.tot) ? RANK[ranked[i-1].c] : i+1; });
+
+// remembered code (this browser only)
+let ME = null;
+try{ const c = localStorage.getItem('dg_me'); if(c && byCode[c]) ME = c; }catch(e){}
+function setMe(c){ ME = c; try{ c ? localStorage.setItem('dg_me', c) : localStorage.removeItem('dg_me'); }catch(e){} }
+
+function teamStats(id){
+  const m = members(id);
+  return { codes:m.length, selling:m.filter(p=>p.tot>0).length, tix:m.reduce((a,p)=>a+p.tot,0), week:m.reduce((a,p)=>a+p.w,0) };
+}
+const LINKS_LIVE = false;   // set to true once the codes are created in Megatix
+const copyBtn = p => LINKS_LIVE ? `<button class="btn ghost sm" data-copy="${esc(p.l)}">Copy<span class="hide-sm"> link</span></button>` : `<span class="pill soon">Link coming</span>`;
+const nameCell = p => `<span class="code">${esc(p.c)}</span>${p.host?' <span class="tag">Host</span>':''}${p.n?`<span class="nm">${esc(p.n)}</span>`:''}`;
+function teamTags(p){
+  return p.t.map(t=>{ const tm = teamById[t]; const label = tm.name;
+    return `<a class="tag" href="#team-${t}">${esc(label)}</a>`; }).join('');
+}
+const incentivesFor = id => INCENTIVES.filter(x=>x.team==='all' || x.team===id);
+
+function foot(){
+  return `<footer>Teams come from the 2027 team sheets. Sales aren't being counted here yet. No sales dollars, phone numbers or emails are shown here.</footer>`;
+}
+
+// ---------------- Personal card ----------------
+function meCard(p){
+  const next = toNext(p), pct = ((p.tot % FREE_EVERY)/FREE_EVERY*100).toFixed(0);
+  return `<div class="me-card">
+    <div class="top">
+      <div><span class="code">${esc(p.c)}</span>${p.n?`<div class="small">${esc(p.n)}</div>`:''}<div style="margin-top:6px">${teamTags(p)}</div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">${LINKS_LIVE?`<button class="btn sm" data-copy="${esc(p.l)}">Copy my ticket link</button>`:`<span class="pill soon" style="align-self:center">Ticket link coming</span>`}<button class="btn ghost sm" data-forget="1">Not me</button></div>
+    </div>
+    <div class="me-nums">
+      <div><div class="small">Tickets sold</div><div class="v">${fmt(p.tot)}</div></div>
+      <div><div class="small">Last 7 days</div><div class="v">${fmt(p.w)}</div></div>
+      <div><div class="small">Event-wide rank</div><div class="v">${RANK[p.c]?'#'+RANK[p.c]:'—'}</div></div>
+      <div><div class="small">Free tickets earned</div><div class="v">${fmt(freeTix(p))}</div></div>
+    </div>
+    <div class="small" style="margin-bottom:6px"><b style="color:var(--gold)">${next} more sale${next===1?'':'s'}</b> to your next free ticket</div>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+  </div>`;
+}
+
+// ---------------- Home ----------------
+function viewHome(){
+  const res = (ico,title,desc,href) => href
+    ? `<a class="card" href="${esc(href)}" target="_blank" rel="noopener"><div class="ico">${ico}</div><b>${title}</b><div class="small">${desc}</div></a>`
+    : `<div class="card soon"><span class="pill soon corner">Link coming</span><div class="ico">${ico}</div><b>${title}</b><div class="small">${desc}</div></div>`;
+  const teamCards = TEAMS.filter(t=>!t.other).map(teamCard).join('');
+  return `
+  <h1>Dangerous Goods <em>XXL 2027</em><br>Promoter Hub</h1>
+  <p class="sub">Your code, your team, the offers and the leaderboard, in one place.</p>
+
+  <h2>Find my code</h2>
+  <input type="search" id="find" placeholder="Type your code or your name" autocomplete="off">
+  <div id="meOut">${ME?meCard(byCode[ME]):''}</div>
+  <div id="findOut"></div>
+
+  <h2>Resources</h2>
+  <div class="grid3">
+    ${res('📘','Promoter Playbook','How to sell, what to say, and how free tickets work.', LINKS.playbook)}
+    ${res('🎨','Content Pack','Stories, posts, captions and artwork ready to share.', LINKS.contentPack)}
+    <div class="card">
+      <div class="ico">✍️</div><b>Promoter Rules</b>
+      <div class="small">Read the rules and sign before you're an official DG promoter.</div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <a class="btn ghost sm" href="#rules">Read the rules</a>
+      </div>
+    </div>
+  </div>
+
+  <h2>Find my team</h2>
+  <div class="grid">${teamCards}</div>
+  <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+    <a class="btn ghost" href="#offers">🎁 Offers →</a><a class="btn ghost" href="#leaderboard">🏆 Event-wide leaderboard →</a>
+  </div>
+  ${foot()}`;
+}
+function teamCard(t){
+  return `<a class="card" href="#team-${t.id}"><b style="font-size:18px;margin:0">${esc(t.name)}</b></a>`;
+}
+function bindHome(){
+  const box = document.getElementById('find'), out = document.getElementById('findOut');
+  box.addEventListener('input', ()=>{
+    const q = box.value.trim().toUpperCase();
+    if(q.length<2){ out.innerHTML=''; return; }
+    const hits = DATA.filter(p=>p.c.includes(q) || (p.n && p.n.toUpperCase().includes(q))).slice(0,6);
+    if(!hits.length){ out.innerHTML='<div class="note">Nothing found. Check the spelling, or ask your team lead.</div>'; return; }
+    out.innerHTML = `<table style="margin-top:12px"><thead><tr><th>Code</th><th class="hide-sm">Team</th><th class="n">Tickets</th><th class="n">Rank</th><th></th></tr></thead><tbody>${
+      hits.map(p=>`<tr><td>${nameCell(p)}</td><td class="hide-sm">${teamTags(p)}</td><td class="n"><b>${fmt(p.tot)}</b></td><td class="n">${RANK[p.c]?'#'+RANK[p.c]:'—'}</td><td class="n"><button class="btn sm" data-me="${esc(p.c)}">This is me</button></td></tr>`).join('')
+    }</tbody></table>`;
+  });
+}
+
+// ---------------- Offers ----------------
+function viewOffers(){
+  const all = INCENTIVES.filter(x=>x.team==='all');
+  return `
+  <a class="back" href="#home">← Home</a>
+  <h1>Promoter <em>offers</em></h1>
+  <p class="sub">What you can earn right now.</p>
+  <h2>Running now</h2>
+  ${all.length ? `<div class="grid3">${all.map(incCard).join('')}</div>` : `<div class="grid3"><div class="card" style="min-height:150px;border-style:dashed"></div><div class="card" style="min-height:150px;border-style:dashed"></div></div>`}
+  <h2>Always on</h2>
+  <div class="grid3">
+    <div class="card hot"><span class="pill gold" style="margin-bottom:8px">Every promoter</span>
+      <b style="font-size:20px">$5 commission per ticket</b>
+      <div class="small">You earn $5 for every ticket sold with your code.</div>
+    </div>
+    <div class="card hot"><span class="pill gold" style="margin-bottom:8px">20+ sales</span>
+      <b style="font-size:20px">$7.50 per ticket</b>
+      <div class="small">Once you reach 20+ sales, your commission goes up to $7.50 per ticket.</div>
+    </div>
+    <div class="card hot"><span class="pill gold" style="margin-bottom:8px">Every 5 sales</span>
+      <b style="font-size:20px">1 free ticket</b>
+      <div class="small">You get 1 free ticket for every ${FREE_EVERY} sales with your code.</div>
+    </div>
+  </div>
+  ${foot()}`;
+}
+function incCard(x){
+  return `<div class="card"><span class="pill hot corner">${x.ends?'Ends '+esc(x.ends):'Live'}</span><b>${esc(x.title)}</b>
+    <div class="small" style="margin-top:6px"><b style="color:var(--gold)">Prize:</b> ${esc(x.prize||'')}</div>
+    <div class="small"><b style="color:var(--text)">How to qualify:</b> ${esc(x.how||'')}</div></div>`;
+}
+
+// ---------------- Rules ----------------
+const PAST_INCENTIVES = [
+  ['Double commission','26 Oct to 2 Nov','Double commission on every sale','Any sale in the week'],
+  ['Cash bonus','9 to 15 Nov','$50 for 3+ sales, $100 for 6+','Sales made that week'],
+  ['Backstage pass draw','9 to 15 Nov','A backstage pass, one per state','5+ sales that week puts you in the draw'],
+  ['Merch from the latest drop','2 to 6 Nov','A piece of merch','3+ sales, Monday to Friday'],
+  ['Friday push','16 to 18 Oct','$100 for 5+ sales, $200 for 10+','Sales from Friday to Sunday'],
+  ['VIP ticket (0 to 3)','12 to 19 Oct','A VIP ticket','New promoters with no sales yet who hit 3+ that week'],
+  ['Daily cash bonus','Week to 12 Oct','$50 for each day you qualify','3+ sales in a single day'],
+  ['$50 drink tokens','5 to 12 Oct','$50 in drink tokens','3+ sales that week'],
+  ['Free merch item','28 Sep to 5 Oct','A merch item of your choice','Most sales in your city\'s group chat (more than 5)'],
+  ['VIP upgrade','Week to 20 Jul','A VIP upgrade','4+ sales that week'],
+];
+function viewRules(){
+  const live = INCENTIVES.filter(x=>x.team==='all');
+  return `
+  <a class="back" href="#home">← Home</a>
+  <h1>Promoter <em>rules</em></h1>
+  <p class="sub">What you agree to as a DG promoter, how you get rewarded, and how incentives work. This is a summary of the Promoter Agreement.</p>
+  <div class="rules">
+
+  <h2>The basics</h2>
+  <div class="card">
+    <ul>
+      <li>The rules apply from the day you get your code until the event.</li>
+      <li>Aim for at least <b>${FREE_EVERY} sales</b> by the event. That also earns you a free ticket.</li>
+      <li>A sale counts when a ticket is bought with <b>your promo code</b> or your ticket link.</li>
+      <li>One name, one code, across all of Australia.</li>
+      <li>Struggling to get sales? Message your team lead. That's what they're there for.</li>
+    </ul>
+  </div>
+
+  <h2>Dos and don'ts</h2>
+  <div class="two">
+    <div class="card"><span class="pill good">Do</span>
+      <ul>
+        <li>Share only the prices, discounts, lineups and details DG has confirmed.</li>
+        <li>Ask your team lead if you're not sure something is OK to post.</li>
+        <li>Keep your messages short, friendly and personal.</li>
+        <li>If you don't know an answer, say you'll check, then ask your team lead.</li>
+        <li>Share ideas, content and wins with the team.</li>
+        <li>Represent DG well, online and at events.</li>
+      </ul>
+    </div>
+    <div class="card"><span class="pill hot">Don't</span>
+      <ul>
+        <li>Promise anything on DG's behalf that you can't guarantee.</li>
+        <li>Say you're DG staff or management.</li>
+        <li>Spam or harass people.</li>
+        <li>Use misleading tactics to get a sale.</li>
+        <li>Talk DG down, online or in person.</li>
+        <li>Use being a promoter to pressure or take advantage of anyone.</li>
+        <li>Screenshot the promoter chat or leak lineups, prices or anything unannounced.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Rewards</h2>
+  <div class="card">
+    <ul>
+      <li><b>Free tickets:</b> 1 free ticket for every ${FREE_EVERY} sales, sent 1 week before the event.</li>
+      <li><b>Commission:</b> $5 per sale, or $7.50 per sale once you reach 20+ sales.</li>
+      <li><b>When commission is paid:</b> after your final sales update, the week after the event. You need to send an invoice.</li>
+      <li><b>Cash bonus incentives:</b> paid monthly. You need to send an invoice.</li>
+      <li>You work independently with the DG team and look after your own tax.</li>
+    </ul>
+  </div>
+
+  <h2>How incentives work</h2>
+  <div class="card">
+    <ul>
+      <li>Incentives are extra rewards on top of free tickets and commission. They change week to week.</li>
+      <li>Most run for one week, usually Monday to Monday or Monday to Sunday. Some are short pushes over a weekend or a single day.</li>
+      <li>Only tickets bought with your code inside the incentive's dates count.</li>
+      <li>New incentives are announced in your team group chat and shown on the <a href="#offers">Offers</a> page.</li>
+      <li>Winners are worked out from the sales data once the incentive closes.</li>
+    </ul>
+  </div>
+  ${live.length?`<h2>Running now</h2><div class="grid3">${live.map(incCard).join('')}</div>`:''}
+
+  <h2>Incentives we've run before</h2>
+  <table><thead><tr><th>Incentive</th><th class="hide-sm">When (2026)</th><th>Reward</th><th>How you earned it</th></tr></thead><tbody>${
+    PAST_INCENTIVES.map(x=>`<tr><td><b>${esc(x[0])}</b></td><td class="hide-sm">${esc(x[1])}</td><td>${esc(x[2])}</td><td>${esc(x[3])}</td></tr>`).join('')
+  }</tbody></table>
+  <div class="note">These are examples, so you know the kinds of rewards to expect. Past incentives have closed.</div>
+  </div>
+  ${foot()}`;
+}
+
+// ---------------- Teams ----------------
+function viewTeams(){
+  return `
+  <a class="back" href="#home">← Home</a>
+  <h1>Team <em>dashboards</em></h1>
+  <p class="sub">Tap a team to see its promoters.</p>
+  <h2>Teams</h2>
+  <div class="grid">${TEAMS.map(teamCard).join('')}
+  </div>
+  ${foot()}`;
+}
+
+let ts = {q:'', zero:false, period:'all', all:false};
+function viewTeam(id){
+  const t = teamById[id], s = teamStats(id), m = members(id);
+  const inc = incentivesFor(id);
+  const recent = m.filter(p=>p.ls && p.tot>0).sort((a,b)=>b.ls.localeCompare(a.ls)).slice(0,6);
+  const free = m.reduce((a,p)=>a+freeTix(p),0);
+  return `
+  <a class="back" href="#home">← Home</a>
+  <h1>${esc(t.name)} <em>dashboard</em></h1>
+  <p class="sub">${t.lead?`Team lead: ${esc(t.lead)}`:''}${t.sub?`${t.lead?' · ':''}${esc(t.sub)}`:''}</p>
+
+  <h2>${inc.length?'Active incentives':'How you earn'}</h2>
+  ${inc.length ? `<div class="grid3">${inc.map(incCard).join('')}</div>` :
+    `<div class="card hot"><span class="pill gold corner">Always on</span><b style="font-size:18px">${FREE_EVERY} sales = 1 free ticket</b><div class="small">No team incentive is running right now. New ones are announced in the group chat and show here.</div></div>`}
+
+  ${s.tix>0?`<div class="stats">
+    <div class="stat"><div class="k">Tickets with promoter codes</div><div class="v">${fmt(s.tix)}</div></div>
+    <div class="stat"><div class="k">Last 7 days</div><div class="v">${fmt(s.week)}</div></div>
+    <div class="stat"><div class="k">Codes selling</div><div class="v">${fmt(s.selling)}<span class="small"> / ${fmt(s.codes)}</span></div></div>
+    <div class="stat"><div class="k">Free tickets earned</div><div class="v">${fmt(free)}</div></div>
+  </div>`:''}
+
+  ${recent.length?`<h2>Recent sellers</h2><div class="chips">${recent.map(p=>`<div class="chip"><span class="code">${esc(p.c)}</span> <span class="small">· ${day(p.ls)}</span></div>`).join('')}</div>`:''}
+
+  <h2>Team board</h2>
+  <div class="tools">
+    <div class="grow"><input type="search" id="tq" placeholder="Search code or name"></div>
+    <div class="seg" id="tp"><button data-p="all">All time</button><button data-p="week">Last 7 days</button></div>
+    <label class="small"><input type="checkbox" id="tz" ${ts.zero?'checked':''}> Show codes with no sales</label>
+  </div>
+  <div id="tt"></div>
+  ${foot()}`;
+}
+function bindTeam(id){
+  const draw = ()=>{
+    const q = ts.q.trim().toUpperCase();
+    let m = members(id).filter(p=> ts.zero || p.tot>0);
+    if(q) m = m.filter(p=>p.c.includes(q) || p.n.toUpperCase().includes(q));
+    m.sort((a,b)=>val(b,ts.period)-val(a,ts.period) || b.tot-a.tot || a.c.localeCompare(b.c));
+    const total = m.length, show = (ts.all || q) ? m : m.slice(0,15);
+    document.querySelectorAll('#tp button').forEach(b=>b.classList.toggle('on', b.dataset.p===ts.period));
+    const wk = ts.period==='week';
+    if(!members(id).some(p=>p.tot>0)){
+      document.getElementById('tp').style.display='none'; document.getElementById('tz').parentElement.style.display='none';
+      document.getElementById('tt').innerHTML = total ? `<table><thead><tr><th>Promoter</th><th class="n">Ticket link</th></tr></thead><tbody>${
+        m.map(p=>`<tr class="${p.c===ME?'me':''}"><td>${nameCell(p)}</td><td class="n">${copyBtn(p)}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">No promoters on this team yet.</div>';
+      return;
+    }
+    document.getElementById('tt').innerHTML = total ? `<table><thead><tr><th>#</th><th>Promoter</th><th class="n">${wk?'7 days':'Tickets'}</th><th class="n hide-sm">${wk?'All time':'7 days'}</th><th class="n hide-sm">Free tix</th><th class="hide-sm">Last sale</th><th class="n">Ticket link</th></tr></thead><tbody>${
+      show.map((p,i)=>`<tr class="top${i+1}${p.c===ME?' me':''}"><td class="rk">${i+1}</td><td>${nameCell(p)}</td><td class="n"><b>${fmt(val(p,ts.period))}</b></td><td class="n hide-sm">${fmt(wk?p.tot:p.w)}</td><td class="n hide-sm">${freeTix(p)||'—'}</td><td class="hide-sm">${day(p.ls)}</td><td class="n">${copyBtn(p)}</td></tr>`).join('')
+    }</tbody></table>${total>show.length?`<div style="margin-top:10px"><button class="btn ghost" id="tall">Show all ${fmt(total)}</button></div>`:''}` : '<div class="empty">No promoters on this team yet.</div>';
+    const b = document.getElementById('tall'); if(b) b.onclick = ()=>{ ts.all=true; draw(); };
+  };
+  document.getElementById('tq').addEventListener('input', e=>{ts.q=e.target.value; draw();});
+  document.getElementById('tz').addEventListener('change', e=>{ts.zero=e.target.checked; draw();});
+  document.getElementById('tp').addEventListener('click', e=>{ if(e.target.dataset.p){ts.period=e.target.dataset.p; draw();} });
+  draw();
+}
+
+// ---------------- Leaderboard ----------------
+let lbPeriod = 'all', lbAll = false;
+function viewLeaderboard(){
+  return `
+  <a class="back" href="#home">← Home</a>
+  <div style="margin-top:16px"><span class="pill gold">Event-wide · every state · every team</span></div>
+  <h1 style="margin-top:10px">Event-wide <em>leaderboard</em></h1>
+  <p class="sub">One board for the whole of DG XXL 2027. Every promoter in Melbourne, Sydney, Brisbane, Perth, Adelaide and Multi-State is ranked together here, not team by team.</p>
+  <div class="card hot" style="margin-top:14px"><b style="font-size:17px">🏆 This is the whole event, not just your team</b>
+    <div class="small">Your rank here is against every DG promoter in Australia. Team vs team and state vs state sit underneath.</div></div>
+  <div class="tools"><div class="seg" id="lp"><button data-p="all">All time</button><button data-p="week">Last 7 days</button></div></div>
+  <div id="lb"></div>
+  ${foot()}`;
+}
+function bindLeaderboard(){
+  const draw = ()=>{
+    document.querySelectorAll('#lp button').forEach(b=>b.classList.toggle('on', b.dataset.p===lbPeriod));
+    const per = lbPeriod;
+    const all = DATA.filter(rankable).filter(p=>val(p,per)>0).sort((a,b)=>val(b,per)-val(a,per)||b.tot-a.tot);
+    if(!DATA.some(p=>p.tot>0)){ document.getElementById('lb').innerHTML='<div class="note">Sales aren\'t being counted here yet. The leaderboard and the team and state charts will fill in once they are.</div>'; return; }
+    const top = lbAll ? all : all.slice(0,25);
+    const mine = ME ? all.findIndex(p=>p.c===ME) : -1;
+    const teams = TEAMS.filter(t=>!t.other).map(t=>({t, v:members(t.id).reduce((a,p)=>a+val(p,per),0)})).sort((a,b)=>b.v-a.v);
+    const tmax = Math.max(1,...teams.map(x=>x.v));
+    const st = STATES.map(s=>({s, v:DATA.reduce((a,p)=>a+(p.s[s]||0),0)})).sort((a,b)=>b.v-a.v);
+    const smax = Math.max(1,...st.map(x=>x.v));
+    const row = (p,i)=>`<tr class="top${i+1}${p.c===ME?' me':''}"><td class="rk">${i+1}</td><td><span class="code">${esc(p.c)}</span></td><td>${teamTags(p)}</td><td class="n"><b>${fmt(val(p,per))}</b></td></tr>`;
+    document.getElementById('lb').innerHTML = `
+    <h2>Event-wide rankings · all promoters</h2>
+    ${top.length?`<table><thead><tr><th>#</th><th>Code</th><th>Team</th><th class="n">Tickets</th></tr></thead><tbody>${
+      top.map(row).join('')}${(!lbAll && mine>=25)?`<tr><td colspan="4" class="small" style="text-align:center">…</td></tr>${row(all[mine],mine)}`:''}
+    </tbody></table>${all.length>top.length?`<div style="margin-top:10px"><button class="btn ghost" id="lall">Show all ${fmt(all.length)} codes</button></div>`:''}`:'<div class="empty">No sales in this period yet.</div>'}
+
+    <h2>Team vs team</h2>
+    <div class="card"><div class="bars">${
+      teams.map((x,i)=>`<div class="bar${i===0&&x.v?' lead':''}"><a href="#team-${x.t.id}">${esc(x.t.name)}</a><div class="track"><div class="fill" style="width:${(x.v/tmax*100).toFixed(1)}%"></div></div><div class="v">${fmt(x.v)}</div></div>`).join('')
+    }</div><div class="small" style="margin-top:10px">Tickets sold with each team's codes, wherever the ticket was for. </div></div>
+
+    <h2>State vs state <span style="text-transform:none;letter-spacing:0">· all time</span></h2>
+    <div class="card"><div class="bars">${
+      st.map((x,i)=>`<div class="bar${i===0?' lead':''}"><span>${x.s}</span><div class="track"><div class="fill" style="width:${(x.v/smax*100).toFixed(1)}%"></div></div><div class="v">${fmt(x.v)}</div></div>`).join('')
+    }</div><div class="small" style="margin-top:10px">Promoter-code tickets for each state's event. A Sydney ticket sold by a Multi-State promoter counts for Multi-State above and Sydney here.</div></div>`;
+    const b = document.getElementById('lall'); if(b) b.onclick = ()=>{ lbAll=true; draw(); };
+  };
+  document.getElementById('lp').addEventListener('click', e=>{ if(e.target.dataset.p){lbPeriod=e.target.dataset.p; draw();} });
+  draw();
+}
+
+// ---------------- Router ----------------
+function route(){
+  const h = (location.hash||'#home').slice(1);
+  const app = document.getElementById('app');
+  let r = 'home';
+  if(h==='teams'){ r='teams'; app.innerHTML=viewTeams(); }
+  else if(h==='offers'){ r='offers'; app.innerHTML=viewOffers(); }
+  else if(h==='rules'){ r='rules'; app.innerHTML=viewRules(); }
+  else if(h==='leaderboard'){ r='leaderboard'; lbAll=false; app.innerHTML=viewLeaderboard(); bindLeaderboard(); }
+  else if(h.startsWith('team-') && teamById[h.slice(5)]){ r='teams'; ts={q:'',zero:true,period:'all',all:false}; app.innerHTML=viewTeam(h.slice(5)); bindTeam(h.slice(5)); }
+  else { app.innerHTML=viewHome(); bindHome(); }
+  document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on', a.dataset.r===r));
+  window.scrollTo(0,0);
+}
+document.addEventListener('click', async e=>{
+  const m = e.target.closest('[data-me]');
+  if(m){ setMe(m.dataset.me); route(); return; }
+  if(e.target.closest('[data-forget]')){ setMe(null); route(); return; }
+  const b = e.target.closest('[data-copy]'); if(!b) return;
+  const old = b.innerHTML;
+  try{ await navigator.clipboard.writeText(b.dataset.copy); b.textContent='Copied ✓'; b.classList.add('copied'); }
+  catch(err){ b.textContent=b.dataset.copy; }
+  setTimeout(()=>{ if(b.isConnected){ b.innerHTML=old; b.classList.remove('copied'); } }, 1800);
+});
+window.addEventListener('hashchange', route);
+route();
+})();
+</script>
+</body>
+</html>
