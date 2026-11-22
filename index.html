@@ -147,6 +147,8 @@ a.card::after{content:"";position:absolute;top:0;right:0;width:0;height:0;border
 footer{border-top:3px solid var(--accent);display:flex;gap:14px;align-items:flex-start}
 footer::before{content:"";flex:0 0 auto;width:48px;height:21px;background:url(dg-logo.png) no-repeat left center/contain;margin-top:1px}
 @media(max-width:560px){.hero .eyebrow{white-space:nowrap;font-size:9.5px;letter-spacing:.1em}.hero-top img{height:26px}h1{font-size:30px}h2{font-size:18px}.hero::before{font-size:100px;right:40px}.hero::after{width:90px;right:-50px}body{background-size:320px auto,auto,auto}}
+.live-note{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;width:max-content;max-width:100%;padding:7px 14px;border:1px solid var(--accent);border-radius:999px;font:800 12px/1 Archivo,sans-serif;font-stretch:115%;letter-spacing:.08em;text-transform:uppercase;color:var(--text);background:rgba(255,46,46,.08)}
+.live-note .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto}
 </style>
 </head>
 <body>
@@ -154,6 +156,7 @@ footer::before{content:"";flex:0 0 auto;width:48px;height:21px;background:url(dg
   <a class="brand" href="#home"><img src="dg-logo.png" alt="DG"> <span>Promoter Hub</span></a>
 </div></header>
 <div class="ticker" aria-hidden="true"><div class="ticker-in"><span>Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ </span><span>Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ Dangerous Goods Promoter Team ✕ </span></div></div>
+<div class="wrap"><div class="live-note"><span class="dot"></span>Live from January 2027</div></div>
 <main class="wrap" id="app"></main>
 
 <script>
