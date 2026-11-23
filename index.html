@@ -227,7 +227,7 @@ function teamTags(p){
 const incentivesFor = id => INCENTIVES.filter(x=>x.team==='all' || x.team===id);
 
 function foot(){
-  return `<footer>Teams come from the 2027 team sheets. Sales aren't being counted here yet. No sales dollars, phone numbers or emails are shown here.</footer>`;
+  return `<footer>Teams come from the 2027 team sheets. Sales go live here from the start of the June event. No sales dollars, phone numbers or emails are shown here.</footer>`;
 }
 
 // ---------------- Personal card ----------------
@@ -511,7 +511,7 @@ function bindLeaderboard(){
     document.querySelectorAll('#lp button').forEach(b=>b.classList.toggle('on', b.dataset.p===lbPeriod));
     const per = lbPeriod;
     const all = DATA.filter(rankable).filter(p=>val(p,per)>0).sort((a,b)=>val(b,per)-val(a,per)||b.tot-a.tot);
-    if(!DATA.some(p=>p.tot>0)){ document.getElementById('lb').innerHTML='<div class="note">Sales aren\'t being counted here yet. The leaderboard and the team and state charts will fill in once they are.</div>'; return; }
+    if(!DATA.some(p=>p.tot>0)){ document.getElementById('lb').innerHTML='<div class="note">Sales go live here from the start of the June event. The leaderboard and the team and state charts fill in from then.</div>'; return; }
     const top = lbAll ? all : all.slice(0,25);
     const mine = ME ? all.findIndex(p=>p.c===ME) : -1;
     const teams = TEAMS.filter(t=>!t.other).map(t=>({t, v:members(t.id).reduce((a,p)=>a+val(p,per),0)})).sort((a,b)=>b.v-a.v);
